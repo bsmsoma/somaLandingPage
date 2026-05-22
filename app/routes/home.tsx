@@ -2,8 +2,9 @@ import type { Route } from "./+types/home";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "~/contexts/LanguageContext";
 import { Link } from "react-router";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiArrowDown } from "react-icons/fi";
 import { FaRocket, FaStore, FaCogs, FaBrain, FaCode } from "react-icons/fa";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function meta({ }: Route.MetaArgs) {
     const baseUrl = "https://brunnomota.com.br";
@@ -42,9 +43,14 @@ const serviceIcons = {
 
 const t = {
     hero: {
+        badge: { en: "Available for projects", pt: "Disponível para projetos" },
         headline: {
-            en: "Your business grows when your digital presence converts.",
-            pt: "Seu negócio cresce quando sua presença digital converte.",
+            en: "Your business grows when your digital presence",
+            pt: "Seu negócio cresce quando sua presença digital",
+        },
+        headlineAccent: {
+            en: "converts.",
+            pt: "converte.",
         },
         subheadline: {
             en: "I build systems, interfaces, and automations that generate real results — not just beautiful pages.",
@@ -58,6 +64,7 @@ const t = {
         },
     },
     services: {
+        eyebrow: { en: "// 01  SERVICES", pt: "// 01  SERVIÇOS" },
         title: { en: "What I build for you", pt: "O que construo para você" },
         items: [
             {
@@ -123,6 +130,7 @@ const t = {
         ],
     },
     differentials: {
+        eyebrow: { en: "// 02  WHY IT WORKS", pt: "// 02  POR QUE FUNCIONA" },
         title: { en: "Why it works", pt: "Por que funciona" },
         items: [
             {
@@ -156,6 +164,7 @@ const t = {
         ],
     },
     finalCta: {
+        eyebrow: { en: "// 03  LET'S WORK", pt: "// 03  VAMOS TRABALHAR" },
         headline: { en: "Ready to grow?", pt: "Pronto para crescer?" },
         subheadline: {
             en: "Tell me the challenge. In 48 hours you get a clear proposal, no runaround.",
@@ -169,10 +178,25 @@ const t = {
     },
 };
 
+const easeOut = [0.23, 1, 0.32, 1] as const;
+
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-80px" },
+    transition: { duration: 0.5, ease: easeOut, delay },
+});
+
 export default function Home() {
     const { theme } = useTheme();
     const { language } = useLanguage();
     const lang = language as Lang;
+    const shouldReduceMotion = useReducedMotion();
+
+    const motionProps = (delay = 0) =>
+        shouldReduceMotion
+            ? {}
+            : fadeUp(delay);
 
     return (
         <div className={`home-page ${theme}`}>
@@ -180,68 +204,139 @@ export default function Home() {
             {/* ── Hero ── */}
             <section className={`hero-section ${theme}`}>
                 <div className="hero-content">
-                    <div className={`hero-profile-image ${theme}`} />
+
+                    <motion.div
+                        className={`hero-profile-image ${theme}`}
+                        initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.7 }}
+                    />
+
                     <div className="hero-text">
-                        <h1 className={`hero-headline ${theme}`}>
-                            {t.hero.headline[lang]}
-                        </h1>
-                        <p className={`hero-subheadline ${theme}`}>
+                        <motion.div
+                            className={`hero-badge ${theme}`}
+                            initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                        >
+                            <span className="hero-badge-dot" />
+                            {t.hero.badge[lang]}
+                        </motion.div>
+
+                        <motion.h1
+                            className={`hero-headline ${theme}`}
+                            {...motionProps(0.05)}
+                        >
+                            {t.hero.headline[lang]}{" "}
+                            <span className="hero-headline-accent">{t.hero.headlineAccent[lang]}</span>
+                        </motion.h1>
+
+                        <motion.p
+                            className={`hero-subheadline ${theme}`}
+                            {...motionProps(0.1)}
+                        >
                             {t.hero.subheadline[lang]}
-                        </p>
-                        <div className="hero-ctas">
+                        </motion.p>
+
+                        <motion.div className="hero-ctas" {...motionProps(0.15)}>
                             <Link to="/projects" className={`btn-primary ${theme}`}>
                                 {t.hero.ctaPrimary[lang]} <FiArrowRight />
                             </Link>
                             <Link to="/contact" className={`btn-secondary ${theme}`}>
                                 {t.hero.ctaSecondary[lang]}
                             </Link>
-                        </div>
-                        <p className={`hero-microcopy ${theme}`}>
+                        </motion.div>
+
+                        <motion.p
+                            className={`hero-microcopy ${theme}`}
+                            {...motionProps(0.2)}
+                        >
                             {t.hero.microcopy[lang]}
-                        </p>
+                        </motion.p>
                     </div>
+                </div>
+
+                <div className="hero-scroll-indicator">
+                    <FiArrowDown />
                 </div>
             </section>
 
             {/* ── Services ── */}
             <section className={`services-section ${theme}`}>
-                <h2 className={`section-title ${theme}`}>{t.services.title[lang]}</h2>
-                <div className="services-grid">
+                <motion.span className={`section-eyebrow ${theme}`} {...motionProps()}>
+                    {t.services.eyebrow[lang]}
+                </motion.span>
+                <motion.h2 className={`section-title ${theme}`} {...motionProps(0.05)}>
+                    {t.services.title[lang]}
+                </motion.h2>
+
+                <div className="bento-services-grid">
                     {t.services.items.map((service, i) => (
-                        <div key={i} className={`service-card ${theme}`}>
+                        <motion.div
+                            key={i}
+                            className={`bento-card bento-card-${i + 1} ${theme}`}
+                            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-60px" }}
+                            transition={{ duration: 0.4, ease: easeOut, delay: i * 0.07 }}
+                        >
                             <div className={`service-icon ${theme}`}>
                                 {serviceIcons[service.icon]}
                             </div>
                             <h3 className="service-title">{service.title[lang]}</h3>
                             <p className="service-description">{service.description[lang]}</p>
                             <span className={`service-microcopy ${theme}`}>{service.microcopy[lang]}</span>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </section>
 
             {/* ── Differentials ── */}
             <section className={`differentials-section ${theme}`}>
-                <h2 className={`section-title ${theme}`}>{t.differentials.title[lang]}</h2>
+                <motion.span className={`section-eyebrow ${theme}`} {...motionProps()}>
+                    {t.differentials.eyebrow[lang]}
+                </motion.span>
+                <motion.h2 className={`section-title ${theme}`} {...motionProps(0.05)}>
+                    {t.differentials.title[lang]}
+                </motion.h2>
+
                 <div className="differentials-grid">
                     {t.differentials.items.map((item, i) => (
-                        <div key={i} className={`differential-item ${theme}`}>
+                        <motion.div
+                            key={i}
+                            className={`differential-item ${theme}`}
+                            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-60px" }}
+                            transition={{ duration: 0.45, ease: easeOut, delay: i * 0.08 }}
+                        >
                             <span className={`differential-number ${theme}`}>0{i + 1}</span>
                             <h3 className="differential-title">{item.title[lang]}</h3>
                             <p className="differential-description">{item.description[lang]}</p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </section>
 
             {/* ── Final CTA ── */}
             <section className={`final-cta-section ${theme}`}>
-                <h2 className="final-cta-headline">{t.finalCta.headline[lang]}</h2>
-                <p className="final-cta-subheadline">{t.finalCta.subheadline[lang]}</p>
-                <Link to="/contact" className="btn-cta-final">
-                    {t.finalCta.cta[lang]} <FiArrowRight />
-                </Link>
-                <p className="final-cta-microcopy">{t.finalCta.microcopy[lang]}</p>
+                <motion.span className="final-cta-eyebrow" {...motionProps()}>
+                    {t.finalCta.eyebrow[lang]}
+                </motion.span>
+                <motion.h2 className="final-cta-headline" {...motionProps(0.05)}>
+                    {t.finalCta.headline[lang]}
+                </motion.h2>
+                <motion.p className="final-cta-subheadline" {...motionProps(0.1)}>
+                    {t.finalCta.subheadline[lang]}
+                </motion.p>
+                <motion.div {...motionProps(0.15)}>
+                    <Link to="/contact" className="btn-cta-final">
+                        {t.finalCta.cta[lang]} <FiArrowRight />
+                    </Link>
+                </motion.div>
+                <motion.p className="final-cta-microcopy" {...motionProps(0.2)}>
+                    {t.finalCta.microcopy[lang]}
+                </motion.p>
             </section>
 
         </div>
