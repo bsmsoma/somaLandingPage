@@ -4,8 +4,6 @@ import { useTheme } from "../contexts/ThemeContext";
 import {
     SiReact,
     SiFirebase,
-    SiTypescript,
-    SiTailwindcss,
     SiMysql,
     SiReactrouter,
     SiHtml5,
@@ -14,9 +12,7 @@ import {
     SiSass
 } from "react-icons/si";
 import rmcImage from "../assets/image/exemplosite.png" //temporario
-import joaoVitorImage from "../assets/image/exemplosite2.png" //temporario
 import bridalStoreImage from "../assets/image/requintetemp.png" //temporario
-import sidneyImage from "../assets/image/sidneytemp.png" //temporario
 import eloProtectImage from "../assets/image/eloprotect.png" //temporario
 import esdraImage from "../assets/image/esdraaromas.jpg"
 import soufitImage from "../assets/image/soufitThumbnail.jpg"
@@ -135,46 +131,6 @@ export default function Projects() {
             technologies: [SiHtml5, SiCss, SiJavascript],
             techTitle: ["HTML", "CSS", "Javascript"],
             image: rmcImage
-        },
-        {
-            title: {
-                name: {
-                    en: "João Vitor - Photography",
-                    pt: "João Vitor - Fotografia"
-                },
-                url: "https://joaovitorfotografo.netlify.app/"
-            },
-            type: {
-                en: "Landing Page",
-                pt: "Landing Page"
-            },
-            description: {
-                en: "Landing page developed to showcase a photographer's portfolio, featuring a modern, responsive design focused on optimal user experience.",
-                pt: "Landing page desenvolvida para mostrar o portfólio de um fotógrafo, com um design moderno e responsivo focado na experiência de usuário ideal."
-            },
-            technologies: [SiReact, SiTypescript, SiTailwindcss, SiReactrouter],
-            techTitle: ["React", "Typescript", "Tailwindcss", "React Router V7"],
-            image: joaoVitorImage
-        },
-        {
-            title: {
-                name: {
-                    en: "Sidney Resende",
-                    pt: "Sidney Resende"
-                },
-                url: "https://sidneyresende.netlify.app/"
-            },
-            type: {
-                en: "Landing Page",
-                pt: "Landing Page"
-            },
-            description: {
-                en: "Landing page optimized for Google Ads and SEO, developed for a law firm. Focused on increasing lead conversion and improving positioning in paid and organic searches.",
-                pt: "Landing page otimizada para Google Ads e SEO, desenvolvida para uma empresa de advocacia. Focado em aumentar a conversão de leads e melhorar a posição em buscas pagas e orgânicas."
-            },
-            technologies: [SiHtml5, SiCss, SiJavascript],
-            techTitle: ["HTML", "CSS", "Javascript"],
-            image: sidneyImage
         },
         {
             title: {
