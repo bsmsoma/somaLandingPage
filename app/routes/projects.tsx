@@ -9,7 +9,7 @@ import {
     SiMysql,
     SiReactrouter,
     SiHtml5,
-    SiCss3,
+    SiCss,
     SiJavascript,
     SiSass
 } from "react-icons/si";
@@ -132,7 +132,7 @@ export default function Projects() {
                 en: "SEO-optimized corporate website, developed with a focus on conversion to attract both local and regional customers.",
                 pt: "Site corporativo otimizado para SEO, desenvolvido com foco em conversão para atrair clientes locais e regionais."
             },
-            technologies: [SiHtml5, SiCss3, SiJavascript],
+            technologies: [SiHtml5, SiCss, SiJavascript],
             techTitle: ["HTML", "CSS", "Javascript"],
             image: rmcImage
         },
@@ -172,7 +172,7 @@ export default function Projects() {
                 en: "Landing page optimized for Google Ads and SEO, developed for a law firm. Focused on increasing lead conversion and improving positioning in paid and organic searches.",
                 pt: "Landing page otimizada para Google Ads e SEO, desenvolvida para uma empresa de advocacia. Focado em aumentar a conversão de leads e melhorar a posição em buscas pagas e orgânicas."
             },
-            technologies: [SiHtml5, SiCss3, SiJavascript],
+            technologies: [SiHtml5, SiCss, SiJavascript],
             techTitle: ["HTML", "CSS", "Javascript"],
             image: sidneyImage
         },
@@ -192,7 +192,7 @@ export default function Projects() {
                 en: "Corporate website developed for an insurance company. Focused on providing a modern and responsive design for the company's website.",
                 pt: "Site corporativo desenvolvido para uma empresa de seguros. Focado em fornecer um design moderno e responsivo para o site da empresa."
             },
-            technologies: [SiHtml5, SiCss3, SiJavascript],
+            technologies: [SiHtml5, SiCss, SiJavascript],
             techTitle: ["HTML", "CSS", "Javascript"],
             image: eloProtectImage
         }
